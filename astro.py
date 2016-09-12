@@ -2,12 +2,14 @@
 Routines for astronomical related calculation.
 
 """
+from __future__ import print_function, division
+
 import datetime
 
 import numpy as np
 
-import astropy.constants as const
 import astropy.units as u
+
 
 def beam_area(*args):
     """

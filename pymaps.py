@@ -2,8 +2,11 @@
 Python wrapper for the MIT Array Performance Simulator (MAPS)
 
 """
+from __future__ import print_function, division
 from subprocess import Popen, PIPE, call, STDOUT
+
 from . import settings as s
+
 
 # TODO: Get rid off all exception classes.
 class _Error(Exception):

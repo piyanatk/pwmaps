@@ -2,8 +2,10 @@
 Store system and configuration information for running MAPS.
 
 """
+from __future__ import print_function, division
+
 import os
-# from enum import Enum
+
 import numpy as np
 
 
@@ -18,9 +20,10 @@ class MAPS(object):
     try:
         ROOT_DIR = os.environ['SIM']
     except KeyError:
-        print "'SIM' environment variable is not in your path.\nMAPS_DIR is " \
-              "temporary set to {:s}. You can set this path manually by calling " \
-              "`set_MPAS_DIR()` (not implemented yet)".format(os.getcwd())
+        print("'SIM' environment variable is not in your path.\nMAPS_DIR is "
+              "temporary set to {:s}. You can set this path manually by "
+              "calling `set_MPAS_DIR()` (not implemented yet)"
+              .format(os.getcwd()))
         ROOT_DIR = os.getcwd()
     ARRAY_DIR = ROOT_DIR + '/array'
     ARRAY_CONFIG = {

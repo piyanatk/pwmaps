@@ -1,8 +1,10 @@
 """
 This module provides and automated objects to run drift scan simulations
-of the MWA using MAPS. It requires a python wrapper for MAPS (pwmaps.py).
+of the MWA using MAPS. It requires a python wrapper for MAPS (pymaps.py).
 
 """
+from __future__ import division, print_function
+
 import os
 import multiprocessing
 from datetime import datetime
@@ -10,7 +12,7 @@ from datetime import datetime
 import numpy as np
 import astropy.constants as const
 
-from . import astro, pwmaps
+from . import astro, pymaps
 from . import settings as s
 
 
@@ -170,7 +172,7 @@ class Drift:
         self.__spec = header + spec + 'Endscan\n\n'
 
     def print_spec(self):
-        print self.__spec
+        print(self.__spec)
 
     def write_spec(self):
         """
@@ -197,7 +199,7 @@ class Drift:
         self.__log += '# {0}\n{1}\n'.format(str(datetime.now()), string)
 
     def print_log(self):
-        print self.__str__()
+        print(self.__str__())
 
     def write_log(self):
         self.update_spec()
@@ -212,13 +214,13 @@ class Drift:
             raise _InputError('No imagae file', self.im2uv.__name__,
                               self.__name__)
         else:
-            print '# im2uv: ' + self.name
+            print('# im2uv: ' + self.name)
             if self.convert_k2jysr:
                 normalizer = 2 * (self._center_frequency * 1e6) ** 2 \
                     * const.k_B.si.value / (const.c.si.value ** 2)
             else:
                 normalizer = None
-            pwmaps.im2uv(self.sky_img, verbose=False, normalizer=normalizer)
+            pymaps.im2uv(self.sky_img, verbose=False, normalizer=normalizer)
             self.vis_in = self.sky_img.rsplit('/', 1)[-1][0:-5] + '.dat'
             self.update_spec()
             self.append_log('# $> im2uv({0})\n'
@@ -232,8 +234,8 @@ class Drift:
             raise _InputError('Neither uvgrid file nor oob source list exist.',
                               self.visgen.__name__, self.name)
         else:
-            print '# visgen: ' + self.name
-            pwmaps.visgen(self.name, self.spec_file, oobs=self.oobs,
+            print('# visgen: ' + self.name)
+            pymaps.visgen(self.name, self.spec_file, oobs=self.oobs,
                         uvgrid=self.vis_in, mpi=mpi, site=self.site)
             self.vis_out = self.name + '.vis'
             self.vislog = self.name + '.vislog'
@@ -248,8 +250,8 @@ class Drift:
             raise _InputError('visibility from visgen is not present',
                               self.maps2uvfits.__name__, self.name)
         else:
-            print '# maps2uvfits: ' + self.name
-            pwmaps.maps2uvfits(self.vis_out, site=self.site, verbose=False)
+            print('# maps2uvfits: ' + self.name)
+            pymaps.maps2uvfits(self.vis_out, site=self.site, verbose=False)
             self.uvfits = self.name + '.uvfits'
             self.update_spec()
             self.append_log('# $> maps2uvfits({0})\n'
