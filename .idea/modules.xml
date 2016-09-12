@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/pwmaps.iml" filepath="$PROJECT_DIR$/.idea/pwmaps.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/pymaps.iml" filepath="$PROJECT_DIR$/.idea/pymaps.iml" />
     </modules>
   </component>
 </project>
